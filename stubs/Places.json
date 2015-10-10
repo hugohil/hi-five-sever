@@ -1,0 +1,14 @@
+{
+  "_id": "place1",
+  "name": "Terrain n°1",
+  "description": "Un terrain de foot sympa.",
+  "url": "http://google.fr",
+  "location": {
+    "address": "201 Rue Saint-Martin, 75003 Paris",
+    "lat": 48.8635727,
+    "lon": 2.3525187
+  },
+  "createdAt": "2015-10-10T14:03:27.438Z",
+  "fields": 3,
+  "contact": "johndoe@example.com"
+}

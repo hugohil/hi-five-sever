@@ -1,0 +1,21 @@
+{
+  "_id": "game1",
+  "infos": {
+    "title": "Game n°1 !",
+    "description": "Le premier match de la saison ! K-BOOM !"
+  },
+  "date": "2015-10-10T14:03:27.438Z",
+  "place": "place1",
+  "price": 50,
+  "peoples": {
+    "organizer": "user1",
+    "pending": ["user2"],
+    "attending": {
+      "teamA": ["user1"],
+      "teamB": []
+    },
+    "declined": []
+  },
+  "private": false,
+  "createdAt": "2015-10-10T14:03:27.438Z"
+}

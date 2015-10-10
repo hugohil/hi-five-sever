@@ -1,6 +1,7 @@
 /**
  * Basic route definition
  */
+var path = require('path');
 var server = require('../index.js');
 var express = server.express;
 
@@ -22,52 +23,55 @@ router.use(function (req, res, next) {
   next();
 });
 
+var stubsPath = path.resolve(__dirname + '/../stubs');
+router.use(express.static(stubsPath));
+
 router.route('/users')
   .get(function (req, res){
-    Users.find(function (err, users){
+    res.sendFile(stubsPath + '/Users.json', {}, function (err){
       if(err){
-        res.send(err);
+        console.log(err);
+        res.status(err.status).end();
       }
-      res.json(users);
     });
   });
 
 router.route('/teams')
   .get(function (req, res){
-    Teams.find(function (err, teams){
+    res.sendFile(stubsPath + '/Teams.json', {}, function (err){
       if(err){
-        res.send(err);
+        console.log(err);
+        res.status(err.status).end();
       }
-      res.json(teams);
     });
   });
 
 router.route('/places')
   .get(function (req, res){
-    Places.find(function (err, places){
+    res.sendFile(stubsPath + '/Places.json', {}, function (err){
       if(err){
-        res.send(err);
+        console.log(err);
+        res.status(err.status).end();
       }
-      res.json(places);
     });
   });
 
 router.route('/games')
   .get(function (req, res){
-    Games.find(function (err, games){
+    res.sendFile(stubsPath + '/Games.json', {}, function (err){
       if(err){
-        res.send(err);
+        console.log(err);
+        res.status(err.status).end();
       }
-      res.json(games);
     });
   });
 
 router.route('/chats')
   .get(function (req, res){
-    Chats.find(function (err, chats){
+    res.sendFile(stubsPath + '/Chats.json', {}, function (err){
       if(err){
-        res.send(err);
+        console.log(err);
+        res.status(err.status).end();
       }
-      res.json(chats);
     });
   });

@@ -1,0 +1,8 @@
+{
+  "_id": "chat1",
+  "teams": ["team1"],
+  "peoples": ["user1", "user2"],
+  "createdAt": "2015-10-10T14:03:27.438Z",
+  "messages": "String",
+  "game": "game1"
+}
