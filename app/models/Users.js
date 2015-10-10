@@ -68,7 +68,7 @@ var UserSchema = new Schema({
     maxDistance: Number
   },
   createdAt: {type: Date, default: new Date().toISOString()},
-  private: Boolean
+  private: {type: Boolean, default false}
 });
 
 module.exports = mongoose.model('User', UserSchema);
