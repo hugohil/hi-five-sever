@@ -13,8 +13,8 @@ var PlaceSchema = new Schema({
     lon: Number
   },
   fields: Number,
+  createdAt: {type: Date, default: new Date().toISOString()},
   contact: Schema.Types.ObjectId || String
-}
-);
+});
 
 module.exports = mongoose.model('Place', PlaceSchema);

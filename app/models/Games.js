@@ -20,7 +20,7 @@ var GameSchema = new Schema({
     },
     declined: [Schema.Types.ObjectId]
   },
-  private: Boolean,
+  private: {type: Boolean, default false},
   createdAt: {type: Date, default: new Date().toISOString()}
 });
 
