@@ -1,0 +1,22 @@
+{
+  "name": "hifive-server",
+  "version": "1.0.0",
+  "description": "Hi Five Soccer App server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "./node_modules/.bin/mocha tests/"
+  },
+  "author": "@hugohil",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.10"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "chai-http": "^1.0.0",
+    "mocha": "^2.3.3"
+  }
+}
