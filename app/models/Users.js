@@ -63,6 +63,7 @@ var UserSchema = new Schema({
   friends: [Schema.Types.ObjectId],
   teams: [Schema.Types.ObjectId],
   games: [Schema.Types.ObjectId],
+  chats: [Schema.Types.ObjectId],
   settings: {
     notificationsLevel: Number,
     maxDistance: Number
