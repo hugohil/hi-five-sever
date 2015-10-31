@@ -59,6 +59,7 @@
   "friends": ["user2"],
   "teams": ["team1"],
   "games": ["game1"],
+  "chats": ["chat1"],
   "settings": {
     "notificationsLevel": 0,
     "maxDistance": 20
@@ -127,6 +128,7 @@
   "friends": ["user1"],
   "teams": ["team1"],
   "games": ["game1"],
+  "chats": ["chat1"],
   "settings": {
     "notificationsLevel": 0,
     "maxDistance": 20
