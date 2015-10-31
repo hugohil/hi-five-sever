@@ -17,7 +17,6 @@ var port = process.env.PORT || config.server.port;
 /**
  * MongoDB setup
  */
-
 var mongoose = module.exports.db = require('mongoose');
 mongoose.connect(config.mongo.url);
 
