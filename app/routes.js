@@ -1,15 +1,11 @@
 /**
  * Basic route definition
  */
+var path = require('path');
 var server = require('../index.js');
 var express = server.express;
 
 var db = server.db;
-var Users = require('./models/Users');
-var Teams = require('./models/Teams');
-var Places = require('./models/Places');
-var Games = require('./models/Games');
-var Chats = require('./models/Chats');
 
 var router = module.exports = express.Router();
 
@@ -22,52 +18,56 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.route('/users')
-  .get(function (req, res){
-    Users.find(function (err, users){
-      if(err){
-        res.send(err);
-      }
-      res.json(users);
-    });
-  });
+var routes = [
+  {path: 'chat', model: require('./models/Chat')},
+  {path: 'game', model: require('./models/Game')},
+  {path: 'message', model: require('./models/Message')},
+  {path: 'place', model: require('./models/Place')},
+  {path: 'team', model: require('./models/Team')},
+  {path: 'user', model: require('./models/User')}
+];
 
-router.route('/teams')
-  .get(function (req, res){
-    Teams.find(function (err, teams){
-      if(err){
-        res.send(err);
-      }
-      res.json(teams);
-    });
-  });
+for (var i = 0; i < routes.length; i++) {
+  autoroute(routes[i].path, routes[i].model);
+}
 
-router.route('/places')
-  .get(function (req, res){
-    Places.find(function (err, places){
-      if(err){
-        res.send(err);
-      }
-      res.json(places);
-    });
-  });
+function autoroute (path, Model){
+  router.route('/' + path)
+    .post(function (req, res){
+      var doc = new Model(req.body);
 
-router.route('/games')
-  .get(function (req, res){
-    Games.find(function (err, games){
-      if(err){
-        res.send(err);
-      }
-      res.json(games);
+      doc.save(function (err){
+        if(err){
+          console.log('routes.js - POST /%s : %s', path, err);
+          res.status(400);
+          res.send(err);
+        }
+        res.status(200);
+        res.json({id: doc._id});
+      });
+    })
+    .get(function (req, res){
+      Model.find(function (err, docs){
+        if(err){
+          console.log('routes.js - GET /%s : %s', path, err);
+          res.status(400);
+          res.send(err);
+        }
+        res.status(200);
+        res.json(docs)
+      });
     });
-  });
 
-router.route('/chats')
-  .get(function (req, res){
-    Chats.find(function (err, chats){
-      if(err){
-        res.send(err);
-      }
-      res.json(chats);
+  router.route('/' + path + '/:id')
+    .get(function (req, res){
+      Model.findById(req.params.id, function (err, doc){
+        if(err){
+          console.log('routes.js - GET /%s : %s', path, err);
+          res.status(400);
+          res.send(err);
+        }
+        res.status(200);
+        res.json(doc);
+      })
     });
-  });
+}
