@@ -9,13 +9,12 @@ var db = server.db;
 
 var router = module.exports = express.Router();
 
+router.route('/authenticate').post(require('./authenticate'));
+
+router.use(require('./verify'));
+
 router.get('/', function (req, res){
   res.json({message: 'Hi Five Soccer API welcomes you :)'});
-});
-
-router.use(function (req, res, next) {
-  console.log('%s %s', req.method, req.path);
-  next();
 });
 
 var routes = [
@@ -34,13 +33,18 @@ for (var i = 0; i < routes.length; i++) {
 function autoroute (path, Model){
   router.route('/' + path)
     .post(function (req, res){
+      if(path == 'user'){
+        res.status(403);
+        res.send('User registration is done on the /api/authenticate route');
+        return;
+      }
       var doc = new Model(req.body);
 
       doc.save(function (err){
         if(err){
-          console.log('routes.js - POST /%s : %s', path, err);
           res.status(400);
           res.send(err);
+          return;
         }
         res.status(200);
         res.json({id: doc._id});
@@ -49,9 +53,9 @@ function autoroute (path, Model){
     .get(function (req, res){
       Model.find(function (err, docs){
         if(err){
-          console.log('routes.js - GET /%s : %s', path, err);
-          res.status(400);
+          res.status(500);
           res.send(err);
+          return;
         }
         res.status(200);
         res.json(docs)
@@ -62,9 +66,9 @@ function autoroute (path, Model){
     .get(function (req, res){
       Model.findById(req.params.id, function (err, doc){
         if(err){
-          console.log('routes.js - GET /%s : %s', path, err);
-          res.status(400);
+          res.status(500);
           res.send(err);
+          return;
         }
         res.status(200);
         res.json(doc);

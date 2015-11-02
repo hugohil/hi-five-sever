@@ -9,6 +9,7 @@ var UserSchema = new Schema({
     fname: String,
     lname: String,
     username: String,
+    password: String,
     birthdate: {type: Date, default: new Date().toISOString()},
     picture: String
   },

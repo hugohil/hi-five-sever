@@ -8,9 +8,15 @@ var config = require('./app/config');
 var express = module.exports.express = require('express');
 var app = module.exports.app = express();
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.use(morgan(config.server.logMode));
+
+app.set('secret', config.authentication.secret);
+app.set('authentication-expiration-date', config.authentication.expire);
 
 var port = process.env.PORT || config.server.port;
 
