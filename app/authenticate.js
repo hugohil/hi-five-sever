@@ -8,7 +8,7 @@ var User = require('./models/User');
 
 var authenticate = module.exports = function (req, res){
   User.findOne({
-    'profile.username': req.body.profile.username
+    'profile.email': req.body.email
   }, function (err, user){
     if(err){
       console.log(err);
@@ -19,20 +19,20 @@ var authenticate = module.exports = function (req, res){
     if(!user){
       return createUser(req, res);
     }
-    if(user.profile.password != req.body.profile.password){
+    if(user.profile.password != req.body.password){
       res.status(403);
       res.json({success: false, reason: 'Authentication failed. Wrong password.'});
       return;
     } else {
       var token = jwt.sign(user, app.get('secret'), {expiresIn: app.get('authentication-expiration-date')});
       res.status(200);
-      res.json({success: true, token: token});
+      res.json({user: user, token: token});
     }
   });
 }
 
 function createUser (req, res){
-  var user = new User(req.body);
+  var user = new User({profile: req.body});
 
   if(!user.profile.email || !isValidEmail(user.profile.email)){
     res.status(403);
@@ -48,7 +48,7 @@ function createUser (req, res){
     }
     var token = jwt.sign(user, app.get('secret'), {expiresIn: app.get('authentication-expiration-date')});
     res.status(200);
-    res.json({id: user._id, token: token});
+    res.json({user: user, token: token});
   });
 }
 
