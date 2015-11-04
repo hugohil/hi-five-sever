@@ -9,7 +9,7 @@ var GameSchema = new Schema({
     description: String
   },
   date: {type: Date, default: new Date().toISOString()},
-  place: Schema.Types.ObjectId || String, // Either a `Places` document or a String formatted address
+  place: String,
   price: Number,
   peoples: {
     organizer: Schema.Types.ObjectId,
