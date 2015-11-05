@@ -17,6 +17,7 @@ app.use(morgan(config.server.logMode));
 
 app.set('secret', config.authentication.secret);
 app.set('authentication-expiration-date', config.authentication.expire);
+app.set('salt-factor', config.salt);
 
 var port = process.env.PORT || config.server.port;
 

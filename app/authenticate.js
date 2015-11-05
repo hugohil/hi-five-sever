@@ -4,6 +4,9 @@ var server = require('../index.js');
 var express = server.express;
 var app = server.app;
 
+var bcrypt = require('bcryptjs');
+var salt = bcrypt.genSaltSync(app.get('salt-factor'));
+
 var User = require('./models/User');
 
 var authenticate = module.exports = function (req, res){
@@ -19,7 +22,7 @@ var authenticate = module.exports = function (req, res){
     if(!user){
       return createUser(req, res);
     }
-    if(user.profile.password != req.body.password){
+    if(!checkPassword(user.profile.password, req.body.password)){
       res.status(403);
       res.json({success: false, reason: 'Authentication failed. Wrong password.'});
       return;
@@ -32,7 +35,9 @@ var authenticate = module.exports = function (req, res){
 }
 
 function createUser (req, res){
-  var user = new User({profile: req.body});
+  var profile = req.body;
+  profile.password = bcrypt.hashSync(req.body.password, salt);
+  var user = new User({profile: profile});
 
   if(!user.profile.email || !isValidEmail(user.profile.email)){
     res.status(403);
@@ -50,6 +55,10 @@ function createUser (req, res){
     res.status(200);
     res.json({user: user, token: token});
   });
+}
+
+function checkPassword(stored, requested){
+  return bcrypt.compareSync(requested, stored);
 }
 
 function isValidEmail(email) {

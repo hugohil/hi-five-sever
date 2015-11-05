@@ -9,5 +9,6 @@ var config = module.exports = {
   authentication: {
     secret: 'secret',
     expire: (60 * 5) // in seconds
-  }
+  },
+  salt: 10
 }
