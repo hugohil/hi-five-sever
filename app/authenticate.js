@@ -22,7 +22,7 @@ var authenticate = module.exports = function (req, res){
     if(!user){
       return createUser(req, res);
     }
-    if(!checkPassword(user.profile.password, req.body.password)){
+    if(!checkPassword(user.password, req.body.password)){
       res.status(403);
       res.json({success: false, reason: 'Authentication failed. Wrong password.'});
       return;
@@ -37,9 +37,9 @@ var authenticate = module.exports = function (req, res){
 function createUser (req, res){
   var profile = req.body;
   profile.password = bcrypt.hashSync(req.body.password, salt);
-  var user = new User({profile: profile});
+  var user = new User(profile);
 
-  if(!user.profile.email || !isValidEmail(user.profile.email)){
+  if(!user.email || !isValidEmail(user.email)){
     res.status(403);
     res.json({success: false, reason: 'You must provide a valid email address to register'});
     return;
