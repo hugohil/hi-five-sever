@@ -4,22 +4,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var GameSchema = new Schema({
-  infos: {
-    title: String,
-    description: String
-  },
+  description: String,
   date: {type: Date, default: new Date().toISOString()},
   place: String,
   price: Number,
-  peoples: {
-    organizer: Schema.Types.ObjectId,
-    pending: [Schema.Types.ObjectId],
-    attending: {
-      teamA: [Schema.Types.ObjectId],
-      teamB: [Schema.Types.ObjectId]
-    },
-    declined: [Schema.Types.ObjectId]
-  },
+  organizer: Schema.Types.ObjectId,
+  pending: [Schema.Types.ObjectId],
+  teamA: [Schema.Types.ObjectId],
+  teamB: [Schema.Types.ObjectId],
   private: {type: Boolean, default: false},
   createdAt: {type: Date, default: new Date().toISOString()}
 });
