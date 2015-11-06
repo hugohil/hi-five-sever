@@ -18,11 +18,7 @@ router.get('/', function (req, res){
 });
 
 var routes = [
-  {path: 'chat', model: require('./models/Chat')},
   {path: 'game', model: require('./models/Game')},
-  {path: 'message', model: require('./models/Message')},
-  {path: 'place', model: require('./models/Place')},
-  {path: 'team', model: require('./models/Team')},
   {path: 'user', model: require('./models/User')}
 ];
 
