@@ -20,7 +20,13 @@ var authenticate = module.exports = function (req, res){
       return;
     }
     if(!user){
-      return createUser(req, res);
+      if(req.body.username){
+        return createUser(req, res);
+      } else {
+        res.status(404);
+        res.json({success: false, reason: 'User not found.'});
+        return;
+      }
     }
     if(!checkPassword(user.password, req.body.password)){
       res.status(403);
