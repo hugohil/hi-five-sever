@@ -4,6 +4,7 @@
 var path = require('path');
 var server = require('../index.js');
 var express = server.express;
+var _ = require('lodash');
 
 var db = server.db;
 
@@ -56,6 +57,26 @@ function autoroute (path, Model){
         res.status(200);
         res.json(docs)
       });
+    })
+    .put(function (req, res){
+      Model.findById(req.body._id, function (err, doc){
+        if(err || doc == null){
+          res.status(500);
+          res.send(err);
+          return;
+        }
+        delete req.body._id;
+        _.merge(doc, req.body);
+        doc.save(function (err){
+          if(err){
+            res.status(500);
+            res.send(err);
+            return;
+          }
+          res.status(200);
+          res.json(doc);
+        })
+      });
     });
 
   router.route('/' + path + '/:id')
@@ -68,6 +89,6 @@ function autoroute (path, Model){
         }
         res.status(200);
         res.json(doc);
-      })
+      });
     });
 }
