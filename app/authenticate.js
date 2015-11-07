@@ -11,7 +11,7 @@ var User = require('./models/User');
 
 var authenticate = module.exports = function (req, res){
   User.findOne({
-    'profile.email': req.body.email
+    email: req.body.email
   }, function (err, user){
     if(err){
       console.log(err);
