@@ -7,6 +7,7 @@ var GameSchema = new Schema({
   description: String,
   // date: {type: Date, default: new Date().toISOString()},
   date: String,
+  time: String,
   place: String,
   price: Number,
   organizer: Schema.Types.ObjectId,
