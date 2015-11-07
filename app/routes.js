@@ -94,7 +94,7 @@ function autoroute (path, Model){
       }
 
       if(id.match(re)){
-        var ids = id.replace(/(\[|\])/g, '').split(',');
+        var ids = id.replace(/(\[|\])|(\"|\')/g, '').split(',');
         Model.find({'_id': {$in: ids}}, handler);
       } else {
         Model.findById(id, handler);
