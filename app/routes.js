@@ -81,7 +81,9 @@ function autoroute (path, Model){
 
   router.route('/' + path + '/:id')
     .get(function (req, res){
-      Model.findById(req.params.id, function (err, doc){
+      var id = req.params.id;
+      var re = /\[(.+)\]/gi;
+      var handler = function handler (err, doc){
         if(err){
           res.status(500);
           res.send(err);
@@ -89,6 +91,13 @@ function autoroute (path, Model){
         }
         res.status(200);
         res.json(doc);
-      });
+      }
+
+      if(id.match(re)){
+        var ids = id.replace(/(\[|\])/g, '').split(',');
+        Model.find({'_id': {$in: ids}}, handler);
+      } else {
+        Model.findById(id, handler);
+      }
     });
 }
