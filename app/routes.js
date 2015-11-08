@@ -106,5 +106,20 @@ function autoroute (path, Model){
       } else {
         Model.findById(id, handler);
       }
+    })
+    .delete(function (req, res){
+      var id = req.params.id;
+
+      Model.findById(id, function (err, doc){
+        if(err || !doc){
+          res.status(404);
+          res.send(err);
+          return;
+        }
+        doc.remove(function (err){
+          res.status(200);
+          res.json({success: true, message: "Document successfully removed"});
+        });
+      });
     });
 }
