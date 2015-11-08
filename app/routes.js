@@ -4,7 +4,6 @@
 var path = require('path');
 var server = require('../index.js');
 var express = server.express;
-var _ = require('lodash');
 
 var db = server.db;
 
@@ -26,6 +25,8 @@ var routes = [
 for (var i = 0; i < routes.length; i++) {
   autoroute(routes[i].path, routes[i].model);
 }
+
+require('./routes/games')();
 
 function autoroute (path, Model){
   router.route('/' + path)
@@ -59,6 +60,11 @@ function autoroute (path, Model){
       });
     })
     .put(function (req, res){
+      if(path == 'game'){
+        res.status(403);
+        res.send('Game update is done via /game/team/update or /game/team/delete');
+        return;
+      }
       Model.findById(req.body._id, function (err, doc){
         if(err || doc == null){
           res.status(500);

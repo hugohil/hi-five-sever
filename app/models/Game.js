@@ -5,15 +5,15 @@ var Schema = mongoose.Schema;
 
 var GameSchema = new Schema({
   description: String,
-  // date: {type: Date, default: new Date().toISOString()},
   date: String,
   time: String,
   place: String,
   price: Number,
   organizer: Schema.Types.ObjectId,
-  pending: [Schema.Types.ObjectId],
-  teamA: [Schema.Types.ObjectId],
-  teamB: [Schema.Types.ObjectId],
+  players: [{
+    id: Schema.Types.ObjectId,
+    team: String
+  }],
   private: {type: Boolean, default: false},
   createdAt: {type: Date, default: new Date().toISOString()}
 });
