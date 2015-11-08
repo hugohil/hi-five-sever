@@ -4,6 +4,7 @@
 var path = require('path');
 var server = require('../index.js');
 var express = server.express;
+var _ = require('lodash');
 
 var db = server.db;
 
