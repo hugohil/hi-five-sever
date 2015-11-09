@@ -73,7 +73,13 @@ function autoroute (path, Model){
           return;
         }
         delete req.body._id;
-        _.merge(doc, req.body);
+        // next thing is lame AF ...
+        if(req.body.pending){
+          doc.pending.push(req.body.pending);
+          doc.markModified('pending');
+        } else {
+          _.merge(doc, req.body);
+        }
         doc.save(function (err){
           if(err){
             res.status(500);
