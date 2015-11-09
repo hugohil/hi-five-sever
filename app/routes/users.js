@@ -20,14 +20,8 @@ var games = module.exports = function (){
           return;
         }
 
-        if(doc.games.indexOf(game) > -1){
-          if(doc.games.length > 1){
-            doc.games.slice(doc.games.indexOf(game), doc.games.indexOf(game) + 1);
-          } else {
-            doc.games = new Array();
-          }
-          doc.markModified('games');
-        }
+        console.log("DEBUG ",game, doc.pending);
+
         if(doc.pending.indexOf(game) < 0){
           doc.pending.push(game);
           doc.markModified('pending');
