@@ -15,6 +15,7 @@ var UserSchema = new Schema({
   goals: Number,
   wins: Number,
   games: [Schema.Types.ObjectId],
+  pending: [Schema.Types.ObjectId],
   notificationsLevel: Number,
   maxDistance: Number,
   createdAt: {type: Date, default: new Date().toISOString()},
