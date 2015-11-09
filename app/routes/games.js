@@ -21,7 +21,6 @@ var games = module.exports = function (){
           return;
         }
 
-        console.log(users);
         doc.players = users
 
         doc.save(function (err){

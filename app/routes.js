@@ -28,6 +28,7 @@ for (var i = 0; i < routes.length; i++) {
 }
 
 require('./routes/games')();
+require('./routes/users')();
 
 function autoroute (path, Model){
   router.route('/' + path)
@@ -73,13 +74,7 @@ function autoroute (path, Model){
           return;
         }
         delete req.body._id;
-        // next thing is lame AF ...
-        if(req.body.pending){
-          doc.pending.push(req.body.pending);
-          doc.markModified('pending');
-        } else {
-          _.merge(doc, req.body);
-        }
+        _.merge(doc, req.body);
         doc.save(function (err){
           if(err){
             res.status(500);
