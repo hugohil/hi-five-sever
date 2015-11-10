@@ -54,6 +54,7 @@ var games = module.exports = function (){
             doc.games.push(game);
             doc.markModified('games');
           }
+
           if(doc.pending.indexOf(game) > -1){
             if(doc.pending.length > 1){
               doc.pending.slice(doc.pending.indexOf(game), doc.pending.indexOf(game) + 1);
@@ -94,6 +95,39 @@ var games = module.exports = function (){
                 doc.games = new Array();
               }
               doc.markModified('games');
+            }
+
+            if(doc.pending.indexOf(game) > -1){
+              if(doc.pending.length > 1){
+                doc.pending.slice(doc.pending.indexOf(game), doc.pending.indexOf(game) + 1);
+              } else {
+                doc.pending = new Array();
+              }
+              doc.markModified('pending');
+            }
+
+            doc.save(function (err){
+              if(err){
+                res.status(500);
+                res.send(err);
+                return;
+              }
+              res.status(200);
+              res.json(doc);
+            });
+          });
+        });
+
+      router.route('/user/quit/pending')
+        .put(function (req, res){
+          var id = req.body.user;
+          var game = req.body.game;
+          User.findById(id, function (err, doc){
+            if(err || !doc){
+              console.log(err);
+              res.status(404);
+              res.json(err);
+              return;
             }
 
             if(doc.pending.indexOf(game) > -1){

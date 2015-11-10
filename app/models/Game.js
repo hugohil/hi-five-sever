@@ -9,6 +9,8 @@ var GameSchema = new Schema({
   time: String,
   place: String,
   price: Number,
+  done: Boolean,
+  winner: String,
   organizer: Schema.Types.ObjectId,
   players: [{
     id: Schema.Types.ObjectId,
