@@ -8,6 +8,7 @@ var GameSchema = new Schema({
   date: String,
   time: String,
   place: String,
+  address: String,
   price: Number,
   done: Boolean,
   winner: String,
